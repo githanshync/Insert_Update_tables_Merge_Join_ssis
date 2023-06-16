@@ -1,0 +1,140 @@
+DROP TABLE USERTEST.PEOPLE_REP CASCADE CONSTRAINTS;
+
+CREATE TABLE USERTEST.PEOPLE_REP
+(
+  PERSONID                 INTEGER              NOT NULL,
+  FULLNAME                 VARCHAR2(50 BYTE)    NOT NULL,
+  PREFERREDNAME            VARCHAR2(50 BYTE)    NOT NULL,
+  SEARCHNAME               VARCHAR2(4000 BYTE)  NOT NULL,
+  ISPERMITTEDTOLOGON       INTEGER              NOT NULL,
+  LOGONNAME                VARCHAR2(50 BYTE),
+  ISEXTERNALLOGONPROVIDER  INTEGER              NOT NULL,
+  HASHEDPASSWORD           BLOB,
+  ISSYSTEMUSER             INTEGER              NOT NULL,
+  ISEMPLOYEE               INTEGER              NOT NULL,
+  ISSALESPERSON            INTEGER              NOT NULL,
+  USERPREFERENCES          CLOB,
+  PHONENUMBER              VARCHAR2(20 BYTE),
+  FAXNUMBER                VARCHAR2(20 BYTE),
+  EMAILADDRESS             VARCHAR2(256 BYTE),
+  PHOTO                    BLOB,
+  CUSTOMFIELDS             CLOB,
+  OTHERLANGUAGES           CLOB,
+  LASTEDITEDBY             INTEGER              NOT NULL,
+  VALIDFROM                TIMESTAMP(6),
+  VALIDTO                  TIMESTAMP(6)
+)
+LOB (CUSTOMFIELDS) STORE AS SECUREFILE (
+  TABLESPACE  TBS_PRUEBAS_DATA
+  ENABLE      STORAGE IN ROW
+  CHUNK       8192
+  RETENTION
+  NOCACHE
+  LOGGING
+  STORAGE    (
+              INITIAL          104K
+              NEXT             1M
+              MINEXTENTS       1
+              MAXEXTENTS       UNLIMITED
+              PCTINCREASE      0
+              BUFFER_POOL      DEFAULT
+             ))
+LOB (HASHEDPASSWORD) STORE AS SECUREFILE (
+  TABLESPACE  TBS_PRUEBAS_DATA
+  ENABLE      STORAGE IN ROW
+  CHUNK       8192
+  RETENTION
+  NOCACHE
+  LOGGING
+  STORAGE    (
+              INITIAL          104K
+              NEXT             1M
+              MINEXTENTS       1
+              MAXEXTENTS       UNLIMITED
+              PCTINCREASE      0
+              BUFFER_POOL      DEFAULT
+             ))
+LOB (OTHERLANGUAGES) STORE AS SECUREFILE (
+  TABLESPACE  TBS_PRUEBAS_DATA
+  ENABLE      STORAGE IN ROW
+  CHUNK       8192
+  RETENTION
+  NOCACHE
+  LOGGING
+  STORAGE    (
+              INITIAL          104K
+              NEXT             1M
+              MINEXTENTS       1
+              MAXEXTENTS       UNLIMITED
+              PCTINCREASE      0
+              BUFFER_POOL      DEFAULT
+             ))
+LOB (PHOTO) STORE AS SECUREFILE (
+  TABLESPACE  TBS_PRUEBAS_DATA
+  ENABLE      STORAGE IN ROW
+  CHUNK       8192
+  RETENTION
+  NOCACHE
+  LOGGING
+  STORAGE    (
+              INITIAL          104K
+              NEXT             1M
+              MINEXTENTS       1
+              MAXEXTENTS       UNLIMITED
+              PCTINCREASE      0
+              BUFFER_POOL      DEFAULT
+             ))
+LOB (USERPREFERENCES) STORE AS SECUREFILE (
+  TABLESPACE  TBS_PRUEBAS_DATA
+  ENABLE      STORAGE IN ROW
+  CHUNK       8192
+  RETENTION
+  NOCACHE
+  LOGGING
+  STORAGE    (
+              INITIAL          104K
+              NEXT             1M
+              MINEXTENTS       1
+              MAXEXTENTS       UNLIMITED
+              PCTINCREASE      0
+              BUFFER_POOL      DEFAULT
+             ))
+TABLESPACE TBS_PRUEBAS_DATA
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE;
+
+
+CREATE UNIQUE INDEX USERTEST.PEOPLE_REP_PK ON USERTEST.PEOPLE_REP
+(PERSONID)
+LOGGING
+TABLESPACE TBS_PRUEBAS_DATA
+PCTFREE    10
+INITRANS   2
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           );
+
+ALTER TABLE USERTEST.PEOPLE_REP ADD (
+  CONSTRAINT PEOPLE_REP_PK
+  PRIMARY KEY
+  (PERSONID)
+  USING INDEX USERTEST.PEOPLE_REP_PK
+  ENABLE VALIDATE);
